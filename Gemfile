@@ -28,6 +28,7 @@ gem 'oj'
 gem 'active_type'
 gem 'authlogic'
 gem 'simple_form'
+gem 'high_voltage', '~> 2.3.0'
 
 # configuration
 gem 'figaro'
