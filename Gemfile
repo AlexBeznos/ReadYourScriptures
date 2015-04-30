@@ -23,11 +23,13 @@ gem 'jbuilder', '~> 2.0'
 # bundle exec rake doc:rails generates the API under doc/api.
 gem 'sdoc', '~> 0.4.0', group: :doc
 
+# haml preprocessor and rake haml:erb2haml command
 gem 'haml-rails'
-gem 'oj'
 gem 'active_type'
 gem 'authlogic'
 gem 'simple_form'
+
+# static pages
 gem 'high_voltage', '~> 2.3.0'
 
 # configuration
