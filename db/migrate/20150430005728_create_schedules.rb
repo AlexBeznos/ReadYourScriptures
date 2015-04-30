@@ -10,5 +10,7 @@ class CreateSchedules < ActiveRecord::Migration
 
       t.timestamps null: false
     end
+
+    add_index :schedules, :user_id
   end
 end
