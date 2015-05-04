@@ -15,7 +15,7 @@ class SchedulesController < ApplicationController
       session[:schedule_id] = @schedule.id
       redirect_to choose_dates_path
     else
-      Rails.logger.error "Error happend while schedule creation. error: #{@schedule.errors.inspect}"
+      log_error
       redirect_to new_schedule_path, :alert => alert_message
     end
   end
@@ -28,7 +28,7 @@ class SchedulesController < ApplicationController
     if @schedule.update(schedule_params)
       redirect_to signup_path
     else
-      Rails.logger.error "Error happend while choosing date and duration for schedule. error: #{@schedule.errors.inspect}"
+      log_error
       redirect_to choose_dates_path, :alert => alert_message
     end
   end
@@ -40,5 +40,9 @@ class SchedulesController < ApplicationController
 
     def find_schedule
       @schedule = Schedule.find(params[:id])
+    end
+
+    def log_error
+      Rails.logger.error "Error happend while choosing date and duration for schedule. error: #{@schedule.errors.inspect}"
     end
 end

@@ -8,6 +8,15 @@ class ApplicationController < ActionController::Base
     "Some thing went wrong, try again later!"
   end
 
+  def prepare_schedule
+    if session[:schedule_id]
+      schedule = Schedule.includes(:books).find(session[:schedule_id])
+
+      current_user.schedules << schedule
+      schedule.gen_assignments
+    end
+  end
+
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)
@@ -18,4 +27,5 @@ class ApplicationController < ActionController::Base
       return @current_user if defined?(@current_user)
       @current_user = current_user_session && current_user_session.user
     end
+
 end
