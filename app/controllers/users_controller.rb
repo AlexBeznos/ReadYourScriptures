@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  after_action :prepare_schedule, only: :create
+
   def new
     @user = User.new
   end
@@ -16,5 +18,14 @@ class UsersController < ApplicationController
   private
     def user_params
       params.require(:user).permit(:email, :password, :phone)
+    end
+
+    def prepare_schedule
+      if session[:schedule_id]
+        schedule = Schedule.find(session[:schedule_id])
+
+        @user.schedules << schedule
+        schedule.gen_assignments
+      end
     end
 end

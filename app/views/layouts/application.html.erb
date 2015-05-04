@@ -9,7 +9,7 @@
 <body>
 
 <%- if current_user %>
-  <%= link_to 'Logout', user_session_path, method: 'DELETE' %>
+  <%= link_to 'Logout', user_session_path(current_user_session), method: 'DELETE' %>
 <% else %>
   <%= link_to 'Login', login_path %>
   <br>

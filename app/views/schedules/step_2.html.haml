@@ -1,0 +1,7 @@
+%h1 Choose date
+
+= simple_form_for @schedule do |f|
+  = f.input :duration, collection: 1..1000 , label: 'HOW LONG DO YOU WANT THE READING PLAN TO LAST?', :selected => '14'
+  = f.input :start_date, as: :string
+  = f.input :step, input_html: { value: '2' }, wrapper_html: { style: 'display:none' }
+  = f.button :submit

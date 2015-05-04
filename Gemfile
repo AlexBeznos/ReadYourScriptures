@@ -28,6 +28,8 @@ gem 'haml-rails'
 gem 'active_type'
 gem 'authlogic'
 gem 'simple_form'
+gem 'bootstrap-datepicker-rails'
+
 
 # static pages
 gem 'high_voltage', '~> 2.3.0'
@@ -38,9 +40,15 @@ gem 'figaro'
 # dump db
 gem 'yaml_db'
 
-# bootswach
-gem 'twitter-bootswatch-rails'
-gem 'twitter-bootswatch-rails-helpers'
+# rufus-scheduler
+gem 'rufus-scheduler'
+
+# sms api
+gem 'twilio-ruby', '~> 4.0.0'
+
+# bootstrap
+gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem "twitter-bootstrap-rails"
 
 group :development, :test do
   gem 'rspec-rails', '~> 3.0.0'

@@ -4,6 +4,10 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   helper_method :current_user_session, :current_user
 
+  def alert_message
+    "Some thing went wrong, try again later!"
+  end
+
   private
     def current_user_session
       return @current_user_session if defined?(@current_user_session)

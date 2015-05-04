@@ -5,6 +5,9 @@ Rails.application.routes.draw do
 
   resources :users, only: :create
   get 'signup' => 'users#new'
+
+  resources :reading_plans, :controller => 'schedules', as: :schedules, only: [:new, :create, :update]
+  get 'reading_plans/choose_dates' => 'schedules#step_2', as: :choose_dates
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
