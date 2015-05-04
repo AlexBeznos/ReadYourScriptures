@@ -4,10 +4,12 @@ Rails.application.routes.draw do
   get 'login' => 'user_sessions#new'
 
   resources :users, only: :create
+  get 'account' => 'users#show'
   get 'signup' => 'users#new'
 
-  resources :reading_plans, :controller => 'schedules', as: :schedules, only: [:new, :create, :update]
   get 'reading_plans/choose_dates' => 'schedules#step_2', as: :choose_dates
+  get 'reading_plans/:id/toggle' => 'schedules#toggle', as: :toggle_schedule
+  resources :reading_plans, :controller => 'schedules', as: :schedules, except: :edit
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

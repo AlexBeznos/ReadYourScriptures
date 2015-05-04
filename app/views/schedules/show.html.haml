@@ -1,0 +1,16 @@
+= content_for :title, "#{@schedule.name} starting #{@schedule.start_date}"
+
+%h1= @schedule.name
+
+= link_to @schedule.active ? 'Stop sending' : 'Start sending', toggle_schedule_path(@schedule)
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Passage
+      %th Date
+  %tbody
+    - @schedule.assignments.each do |assignment|
+      %tr
+        %td= assignment.name
+        %td= assignment.sending_date

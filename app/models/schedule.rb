@@ -136,8 +136,19 @@ class Schedule < ActiveRecord::Base
     {:arr => arr, :till => till}
   end
 
-  def activate
-    self.update(active: true)
+  def toggle
+    if self.active
+      self.update(active: false)
+    else
+      self.update(active: true)
+      today = Date.today
+
+      if self.assignments.first.sending_date <= today
+        self.assignments.where(sended: false).each_with_index do |assignment, index|
+          assignment.update(sending_date: today + index)
+        end
+      end
+    end
   end
 
   def gen_name_book_part

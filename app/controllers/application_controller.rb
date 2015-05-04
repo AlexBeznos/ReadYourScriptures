@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   end
 
   def prepare_schedule
-    if session[:schedule_id]
+    if session[:schedule_id] && current_user
       schedule = Schedule.includes(:books).find(session[:schedule_id])
 
       current_user.schedules << schedule

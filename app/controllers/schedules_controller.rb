@@ -1,5 +1,9 @@
 class SchedulesController < ApplicationController
-  before_action :find_schedule, only: :update
+  before_action :find_schedule, only: [:update, :destroy, :toggle]
+
+  def show
+    @schedule = Schedule.includes(:assignments).find(params[:id])
+  end
 
   def new
     @schedule = Schedule.new
@@ -20,17 +24,32 @@ class SchedulesController < ApplicationController
     end
   end
 
+  def toggle
+    @schedule.toggle
+    redirect_to schedule_path(@schedule)
+  end
+
   def step_2
     @schedule = Schedule.find(session[:schedule_id])
   end
 
   def update
     if @schedule.update(schedule_params)
-      redirect_to signup_path
+      if current_user
+        prepare_schedule
+        redirect_to schedule_path(@schedule)
+      else
+        redirect_to signup_path
+      end
     else
       log_error
       redirect_to choose_dates_path, :alert => alert_message
     end
+  end
+
+  def destroy
+    @schedule.destroy
+    redirect_to account_path
   end
 
   private

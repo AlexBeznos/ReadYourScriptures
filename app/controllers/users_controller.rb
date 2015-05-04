@@ -1,6 +1,9 @@
 class UsersController < ApplicationController
   after_action :prepare_schedule, only: :create
 
+  def show
+  end
+
   def new
     @user = User.new
   end
