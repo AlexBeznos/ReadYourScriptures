@@ -20,3 +20,4 @@
             %th= link_to user.email, admin_user_path(user)
             %th= user.phone
             %th= user.notification_type
+  = paginate @users
