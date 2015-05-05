@@ -1,13 +1,17 @@
 = content_for :title, 'New reading plan'
 
 %h1 Choose Books
-  
-= simple_form_for @schedule do |f|
-  %h3 New testament
-  = f.collection_check_boxes :book_ids, @books.where(testament: Book.testaments[:new_testament]), :id, :name
 
-  %h3 Old testament
-  = f.collection_check_boxes :book_ids, @books.where(testament: Book.testaments[:old_testament]), :id, :name
+= simple_form_for @schedule do |f|
+  %h3 New book_type
+  = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:new_book_type]), :id, :name
+
+  %h3 Old book_type
+  = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:old_book_type]), :id, :name
+
+  - if @books.where(book_type: Book.book_types[:others]).any?
+    %h3 Other books
+    = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:others]), :id, :name
 
   = f.button :submit
 

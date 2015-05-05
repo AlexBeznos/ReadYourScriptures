@@ -28,7 +28,7 @@ ActiveRecord::Schema.define(version: 20150505000829) do
   add_index "assignments", ["schedule_id"], name: "index_assignments_on_schedule_id", using: :btree
 
   create_table "books", force: :cascade do |t|
-    t.integer  "testament"
+    t.integer  "book_type"
     t.string   "name"
     t.integer  "parts_number"
     t.datetime "created_at",   null: false

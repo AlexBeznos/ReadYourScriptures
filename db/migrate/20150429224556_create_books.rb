@@ -1,7 +1,7 @@
 class CreateBooks < ActiveRecord::Migration
   def change
     create_table :books do |t|
-      t.integer :testament
+      t.integer :book_type
       t.string :name
       t.integer :parts_number
 

@@ -53,13 +53,13 @@ class Schedule < ActiveRecord::Base
             when 3
               "#{books.first.name}, #{books.second.name} and #{books.last.name}"
             when 27
-              if books.where(testament: Book.testaments[:new_testament]).count == 27
+              if books.where(book_type: Book.book_types[:new_testament]).count == 27
                 'New testament'
               else
                 many
               end
             when 39
-              if books.where(testament: Book.testaments[:old_testament]).count == 39
+              if books.where(book_type: Book.book_types[:old_testament]).count == 39
                 'Old testament'
               else
                 many
