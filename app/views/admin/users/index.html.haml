@@ -1,0 +1,22 @@
+= content_for :title, "Users"
+%section.content-header
+  %h1= yield(:title)
+
+  - navigation_add 'Users', admin_users_path
+  = render_navigation
+
+%section.content
+  .box.box-solid
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th email
+            %th phone
+            %th notification type
+        %tbody
+        - @users.each do |user|
+          %tr
+            %th= link_to user.email, admin_user_path(user)
+            %th= user.phone
+            %th= user.notification_type

@@ -28,6 +28,7 @@ gem 'haml-rails'
 gem 'active_type'
 gem 'authlogic'
 gem 'simple_form'
+gem 'kaminari'
 gem 'bootstrap-datepicker-rails'
 
 # static pages

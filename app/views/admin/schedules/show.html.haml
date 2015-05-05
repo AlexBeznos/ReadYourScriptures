@@ -1,0 +1,43 @@
+= content_for :title, "User #{@user.email}"
+%section.content-header
+  %h1= yield(:title)
+
+  - navigation_add 'Users', admin_users_path
+  - navigation_add "User #{@user.id}", admin_user_path(@user)
+  - navigation_add "Schedule #{@schedule.id}", admin_user_schedule_path(@user, @schedule)
+  = render_navigation
+
+%section.content
+  .row
+    .col-md-4
+      .box
+        .box-header.with-border Schedule information
+        .box-body
+          %ul.list-group
+            %li.list-group-item
+              Name
+              %span.text-muted.pull-right= @schedule.name
+            %li.list-group-item
+              Duration
+              %span.text-muted.pull-right= @schedule.duration
+            %li.list-group-item
+              Start date
+              %span.text-muted.pull-right= @schedule.start_date
+
+  .box
+    .box-header.with-border
+      Assignments
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th name
+            %th sending date
+            %th sended
+            %th
+        %tbody
+        - @schedule.assignments.each do |assignment|
+          %tr
+            %th= assignment.name
+            %td= assignment.sending_date
+            %td= assignment.sended

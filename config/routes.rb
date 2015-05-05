@@ -10,6 +10,13 @@ Rails.application.routes.draw do
   get 'reading_plans/choose_dates' => 'schedules#step_2', as: :choose_dates
   get 'reading_plans/:id/toggle' => 'schedules#toggle', as: :toggle_schedule
   resources :reading_plans, :controller => 'schedules', as: :schedules, except: :edit
+
+  namespace :admin do
+    get '/' => 'users#index'
+    resources :users, only: [:index, :show] do
+      resources :schedules, only: :show
+    end
+  end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

@@ -1,0 +1,10 @@
+.wrapper
+  %header.main-header
+    %a.logo{:href => admin_path}
+      %b Administration
+    %nav.navbar.navbar-static-top{:role => "navigation"}
+      %a.sidebar-toggle{"data-toggle" => "offcanvas", :href => "#", :role => "button"}
+        %span.sr-only Toggle navigation
+  %aside.main-sidebar
+    %section.sidebar
+      = render 'shared/admin/navigation'

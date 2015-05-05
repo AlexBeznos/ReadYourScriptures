@@ -1,0 +1,11 @@
+%ol.breadcrumb
+  - nav.each do |n|
+    -if n.equal? nav.first
+      %li
+        = link_to n[:url] do
+          %i.fa.fa-dashboard
+          = n[:title]
+    - elsif n.equal? nav.last
+      %li= n[:title]
+    - else
+      %li= link_to n[:title], n[:url]
