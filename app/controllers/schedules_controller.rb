@@ -1,8 +1,8 @@
 class SchedulesController < ApplicationController
-  before_action :find_schedule, only: [:update, :destroy, :toggle]
+  before_action :find_schedule, only: [:show, :update, :destroy, :toggle]
+  before_action :require_proper_user, only: [:show, :toggle, :destroy]
 
   def show
-    @schedule = Schedule.includes(:assignments).find(params[:id])
   end
 
   def new
@@ -59,6 +59,12 @@ class SchedulesController < ApplicationController
 
     def find_schedule
       @schedule = Schedule.find(params[:id])
+    end
+
+    def require_proper_user
+      unless current_user && current_user.id == @schedule.user_id
+        redirect_to login_path, alert: I18n.t('alert.authorization')
+      end
     end
 
     def log_error

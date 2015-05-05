@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :require_user, only: :show
   after_action :prepare_schedule, only: :create
 
   def show
@@ -12,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to root_path, :notice => 'User successfuly created'
+      redirect_to account_path, :notice => 'User successfuly created'
     else
       render :action => :new
     end
