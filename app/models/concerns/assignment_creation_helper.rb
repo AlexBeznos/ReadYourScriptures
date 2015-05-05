@@ -34,14 +34,13 @@ module AssignmentCreationHelper
             Assignment.create(name: "#{book.name} 1 - #{sum}",
                               sending_date: self.start_date + day_from,
                               schedule_id: self.id)
-            day_from += 1
           else
             Assignment.create(name: "#{prev[:book_name]} #{prev[:part]} - #{book.name} #{sum}",
                               sending_date: self.start_date + day_from,
                               schedule_id: self.id)
-            day_from += 1
           end
 
+          day_from += 1
           with_mod = true
         else
           if prev[:first]
@@ -49,7 +48,7 @@ module AssignmentCreationHelper
           else
             hash = prev
           end
-          self.gen_assignments_with_mod(book_num + 1, div, mod - book.parts_number, day_from, hash )
+          return self.gen_assignments_with_mod(book_num + 1, div, mod - book.parts_number, day_from, hash )
         end
       end
 

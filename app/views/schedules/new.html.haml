@@ -7,17 +7,23 @@
     %h1 Choose Books
 
     = simple_form_for @schedule do |f|
-      %h3 New testament
-      .spacing
+      %h3
+        New testament /
+        %a{:href => '#', :class => 'check_all', :id => 'new'} Check all
+      .spacing.new
         = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:new_testament]), :id, :name
 
-      %h3 Old testament
-      .spacing
+      %h3
+        Old testament /
+        %a{:href => '#', :class => 'check_all', :id => 'old'} Check all
+      .spacing.old
         = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:old_testament]), :id, :name
 
       - if @books.where(book_type: Book.book_types[:others]).any?
-        %h3 Other books
-        .spacing
+        %h3
+          Other books /
+          %a{:href => '#', :class => 'check_all', :id => 'others'} Check all
+        .spacing.others
           = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:others]), :id, :name
 
       = f.button :submit, "Next: Choose Dates", class: "my-button"

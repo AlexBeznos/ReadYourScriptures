@@ -12,4 +12,12 @@ $(document).on("ready page:load", function() {
   $('#user_notification_type').change(function() {
     show_phone_form();
   }).change();
+
+
+});
+
+$(document).ready(function() {
+  $('.check_all').on('click', function() {
+    $('.' + this.id + ' input[type="checkbox"]').click();
+  });
 });
