@@ -1,6 +1,10 @@
 = content_for :title, 'Sign up'
 
-%h1 Sign up
+= render 'shared/application/blue_box'
 
-= render 'form'
-= link_to 'Login', login_path
+
+.container.mb.min_height
+  .row
+    .col-md-6
+      = render 'form'
+      = link_to 'Sign in', login_path

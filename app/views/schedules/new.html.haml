@@ -1,21 +1,39 @@
 = content_for :title, 'New reading plan'
 
-%h1 Choose Books
+= render 'shared/application/blue_box'
 
-= simple_form_for @schedule do |f|
-  %h3 New book_type
-  = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:new_book_type]), :id, :name
+.container.mb
+  .row
+    %h1 Choose Books
 
-  %h3 Old book_type
-  = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:old_book_type]), :id, :name
+    = simple_form_for @schedule do |f|
+      %h3 New testament
+      .spacing
+        = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:new_testament]), :id, :name
 
-  - if @books.where(book_type: Book.book_types[:others]).any?
-    %h3 Other books
-    = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:others]), :id, :name
+      %h3 Old testament
+      .spacing
+        = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:old_testament]), :id, :name
 
-  = f.button :submit
+      - if @books.where(book_type: Book.book_types[:others]).any?
+        %h3 Other books
+        .spacing
+          = f.collection_check_boxes :book_ids, @books.where(book_type: Book.book_types[:others]), :id, :name
+
+      = f.button :submit, "Next: Choose Dates", class: "my-button"
 
 :css
   span {
-    display: block
+    display: block;
+  }
+
+  .spacing {
+    -webkit-column-count: 3;
+    -webkit-column-gap: 20px;
+    column-count: 3;
+    column-gap: 20px;
+  }
+
+  label {
+    margin-left: 10px;
   }

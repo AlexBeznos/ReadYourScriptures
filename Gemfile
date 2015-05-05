@@ -30,7 +30,6 @@ gem 'authlogic'
 gem 'simple_form'
 gem 'bootstrap-datepicker-rails'
 
-
 # static pages
 gem 'high_voltage', '~> 2.3.0'
 

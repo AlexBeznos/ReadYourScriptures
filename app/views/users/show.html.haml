@@ -1,20 +1,23 @@
 = content_for :title, 'My reading plans'
 
-%h1 Account
-%h3 Reading Plans
+= render 'shared/application/blue_box'
 
-- if current_user.schedules.any?
-  %table.table.table-striped
-    %thead
-      %tr
-        %th Reading Plan
-        %th Start date
-        %th
-    %tbody
-      - current_user.schedules.each do |schedule|
-        %tr
-          %td= link_to schedule.name, schedule_path(schedule)
-          %td= schedule.start_date
-          %td= link_to 'delete', schedule_path(schedule), class: 'btn btn-default', method: 'DELETE'
-- else
-  = link_to 'You alredy have no reading plans, please create it', new_schedule_path
+
+.container.mb.min_height
+  .row
+    .col-md-12
+      - if current_user.schedules.any?
+        %table.table.table-striped
+          %thead
+            %tr
+              %th Reading Plan
+              %th Start date
+              %th
+          %tbody
+            - current_user.schedules.each do |schedule|
+              %tr
+                %td= link_to schedule.name, schedule_path(schedule)
+                %td= schedule.start_date
+                %td= link_to 'delete', schedule_path(schedule), class: 'btn btn-default', method: 'DELETE'
+      - else
+        = link_to 'You alredy have no reading plans, please create it', new_schedule_path

@@ -1,3 +1,10 @@
-%h1 Hello world
-%p this is first home page
-= link_to 'New Reading Plan', new_schedule_path
+#headerwrap
+  .container
+    .row
+      .col-lg-8.col-lg-offset-2
+        %h3 Want to read more but can't plan your reading?
+        %h1 Read Your Scriptures
+        %h5 Be notified, what to read today
+        %h5= link_to 'create Your reading plan', new_schedule_path, class: 'btn btn-info btn-sm'
+      .col-lg-8.col-lg-offset-2.himg
+        %img.img-responsive{:src => "/assets/learning.png"}/

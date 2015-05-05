@@ -1,16 +1,19 @@
 = content_for :title, "#{@schedule.name} starting #{@schedule.start_date}"
+= render 'shared/application/blue_box'
 
-%h1= @schedule.name
 
-= link_to @schedule.active ? 'Stop sending' : 'Start sending', toggle_schedule_path(@schedule)
+.container.mb.min_height
+  .row
+    .col-md-12
+      = link_to @schedule.active ? 'Stop sending' : 'Start sending', toggle_schedule_path(@schedule), class: "btn pull-right btn-xs btn-#{@schedule.active ? 'warning' : 'success'}"
 
-%table.table.table-striped
-  %thead
-    %tr
-      %th Passage
-      %th Date
-  %tbody
-    - @schedule.assignments.each do |assignment|
-      %tr
-        %td= assignment.name
-        %td= assignment.sending_date
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Passage
+            %th Date
+        %tbody
+          - @schedule.assignments.each do |assignment|
+            %tr
+              %td= assignment.name
+              %td= assignment.sending_date

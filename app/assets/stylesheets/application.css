@@ -12,6 +12,8 @@
  *
  *= require_tree .
  *= require bootstrap_and_overrides
- *= require bootstrap-datepicker3
+ *= require style
+ *= require bootstrap-datepicker
+ *= require font-awesome.min
  *= require_self
  */

@@ -1,9 +1,13 @@
-= content_for :title, 'Choose date'
+= content_for :title, 'Choose Dates'
 
-%h1 Choose date
+= render 'shared/application/blue_box'
 
-= simple_form_for @schedule do |f|
-  = f.input :duration, collection: 1..1000 , label: 'HOW LONG DO YOU WANT THE READING PLAN TO LAST?', :selected => '14'
-  = f.input :start_date, as: :string
-  = f.input :step, input_html: { value: '2' }, wrapper_html: { style: 'display:none' }
-  = f.button :submit
+
+.container.mb.min_height
+  .row
+    .col-md-6
+      = simple_form_for @schedule do |f|
+        = f.input :duration, collection: 1..1000 , label: 'HOW LONG DO YOU WANT THE READING PLAN TO LAST?', :selected => '14'
+        = f.input :start_date, as: :string, label: 'START DATE'
+        = f.input :step, input_html: { value: '2' }, wrapper_html: { style: 'display:none' }
+        = f.button :submit, 'Create plan'

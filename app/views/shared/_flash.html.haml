@@ -1,0 +1,7 @@
+-flash.each do |type, message|
+  -if type == 'notice'
+    .alert.alert-success
+      = message
+  -elsif type == 'alert'
+    .alert.alert-warning
+      = message
