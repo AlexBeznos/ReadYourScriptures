@@ -16,4 +16,5 @@
 //= require jquery.slimscroll
 //= require fastclick
 //= require app
+//= require sidebar
 //= require turbolinks

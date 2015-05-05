@@ -1,0 +1,13 @@
+= content_for :title, "New Book"
+%section.content-header
+  %h1= yield(:title)
+
+  - navigation_add 'Books', admin_books_path
+  - navigation_add 'New', new_admin_book_path
+  = render_navigation
+
+%section.content
+  .row
+    .col-md-6
+      .box.box-solid
+        .box-body= render 'form'

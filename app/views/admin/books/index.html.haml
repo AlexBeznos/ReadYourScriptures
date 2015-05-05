@@ -1,0 +1,27 @@
+= content_for :title, "Books"
+%section.content-header
+  %h1= yield(:title)
+
+  - navigation_add 'Books', admin_books_path
+  = render_navigation
+
+%section.content
+  .box.box-solid
+    .box-header= link_to 'add new book', new_admin_book_path, class: 'btn btn-primary btn-flat btn-block btn-sm'
+    .box-body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th name
+            %th number of parts
+            %th book type
+            %th
+        %tbody
+        - @books.each do |book|
+          %tr
+            %th= book.name
+            %td= book.parts_number
+            %td= book.book_type
+            %td
+              = link_to 'edit', edit_admin_book_path(book), class: 'btn btn-warning'
+              = link_to 'destroy', admin_book_path(book), class: 'btn btn-danger', method: 'DELETE'

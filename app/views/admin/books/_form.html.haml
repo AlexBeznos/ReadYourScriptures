@@ -1,0 +1,7 @@
+= simple_form_for [:admin, @book] do |f|
+  = f.error_notification
+  = f.input :name
+  = f.input :parts_number
+  = f.input :book_type, collection: Book.book_types.keys
+
+  = f.button :submit, 'Create book'
