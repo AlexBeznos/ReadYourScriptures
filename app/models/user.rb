@@ -5,8 +5,24 @@ class User < ActiveRecord::Base
     c.require_password_confirmation = false
   end
 
-  validates :email, :password, presence: true
-  validates :phone,:presence => true,
-                   :numericality => true,
-                   :length => { :minimum => 10, :maximum => 15 }
+  enum notification_type: [:email, :sms, :email_and_sms]
+
+  validates :email, :password, :notification_type, presence: true
+  validates :phone, :presence => true,
+                    :numericality => true,
+                    :length => { :minimum => 10, :maximum => 15 },
+                    :if => :sms_included?
+
+  before_create :set_phone, :if => :sms_included?
+
+  def sms_included?
+    puts 'notification'
+    puts self.notification_type
+    puts [:sms, :email_and_sms].include?(self.notification_type.to_sym)
+    [:sms, :email_and_sms].include?(self.notification_type.to_sym)
+  end
+
+  def set_phone
+    self.phone = nil
+  end
 end
