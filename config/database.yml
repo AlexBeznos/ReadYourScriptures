@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: bible_production
-  username: bible
+  username: <%= ENV['BIBLE_DATABASE_USERNAME'] %>
   password: <%= ENV['BIBLE_DATABASE_PASSWORD'] %>
+  database: bible_production
