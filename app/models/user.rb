@@ -14,15 +14,17 @@ class User < ActiveRecord::Base
                     :if => :sms_included?
 
   before_create :set_phone, :if => :sms_included?
+  after_create :send_welcome_email
 
   def sms_included?
-    puts 'notification'
-    puts self.notification_type
-    puts [:sms, :email_and_sms].include?(self.notification_type.to_sym)
     [:sms, :email_and_sms].include?(self.notification_type.to_sym)
   end
 
   def set_phone
     self.phone = nil
+  end
+
+  def send_welcome_email
+    MailSender.welcome(self).deliver
   end
 end
