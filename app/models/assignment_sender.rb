@@ -1,4 +1,6 @@
 class AssignmentSender
+  include Smsable
+
   attr_accessor :assignments
 
   def find_assignments
@@ -7,14 +9,18 @@ class AssignmentSender
 
   def notify
     self.assignments.each do |assignment|
-      case assignment.schedule.user.notification_type
-      when 'email'
-        send_email(assignment)
-      when 'sms'
-        send_sms(assignment)
-      when 'email_and_sms'
-        send_sms(assignment)
-        send_email(assignment)
+      if assignment.schedule.active
+        case assignment.schedule.user.notification_type
+        when 'email'
+          send_email(assignment)
+        when 'sms'
+          send_sms(assignment)
+        when 'email_and_sms'
+          send_sms(assignment)
+          send_email(assignment)
+        end
+
+        assignment.update(sended: true)
       end
     end
   end
@@ -25,5 +31,6 @@ class AssignmentSender
     end
 
     def send_sms(assignment)
+      send_sms(assignment.schedule.user.phone, assignment.name)
     end
 end
