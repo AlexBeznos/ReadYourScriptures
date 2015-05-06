@@ -1,6 +1,7 @@
 class SchedulesController < ApplicationController
   before_action :find_schedule, only: [:show, :update, :destroy, :toggle]
   before_action :require_proper_user, only: [:show, :toggle, :destroy]
+  before_action :validate_association, only: :create
 
   def show
   end
@@ -43,7 +44,7 @@ class SchedulesController < ApplicationController
       end
     else
       log_error
-      redirect_to choose_dates_path, :alert => alert_message
+      render :action => :step_2
     end
   end
 
@@ -64,6 +65,15 @@ class SchedulesController < ApplicationController
     def require_proper_user
       unless current_user && current_user.id == @schedule.user_id
         redirect_to login_path, alert: I18n.t('alert.authorization')
+      end
+    end
+
+    def validate_association
+      book_ids = params[:schedule][:book_ids]
+      book_ids.delete('')
+
+      if book_ids.empty?
+        redirect_to new_schedule_path, :alert => 'Should be at least one book choosen!'
       end
     end
 
