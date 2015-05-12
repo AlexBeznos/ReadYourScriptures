@@ -23,7 +23,7 @@ class Schedule < ActiveRecord::Base
 
   def check_user_activation
     user = self.user
-    
+
     if user
       if user.activated == false
         self.active = false
@@ -68,13 +68,13 @@ class Schedule < ActiveRecord::Base
             when 3
               "#{books.first.name}, #{books.second.name} and #{books.last.name}"
             when 27
-              if books.where(book_type: Book.book_types[:new_testament]).count == 27
+              if books.where(book_category_id: 1).count == 27
                 'New testament'
               else
                 many
               end
             when 39
-              if books.where(book_type: Book.book_types[:old_testament]).count == 39
+              if books.where(book_category_id: 2).count == 39
                 'Old testament'
               else
                 many

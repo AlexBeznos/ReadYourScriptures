@@ -2,6 +2,6 @@
   = f.error_notification
   = f.input :name
   = f.input :parts_number
-  = f.input :book_type, collection: Book.book_types.keys
+  = f.association :book_category
 
-  = f.button :submit, 'Create book'
+  = f.button :submit

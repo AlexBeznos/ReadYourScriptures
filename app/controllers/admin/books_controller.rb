@@ -2,7 +2,7 @@ class Admin::BooksController < AdminController
   before_action :find_book, only: [:show, :edit, :update, :destroy]
 
   def index
-    @books = Book.page(params[:page]).per(10)
+    @books = Book.includes(:book_category).page(params[:page]).per(10)
   end
 
   def new
@@ -40,6 +40,6 @@ class Admin::BooksController < AdminController
     end
 
     def book_params
-      params.require(:book).permit(:name, :book_type, :parts_number)
+      params.require(:book).permit(:name, :book_category_id, :parts_number)
     end
 end

@@ -1,7 +1,6 @@
 class Book < ActiveRecord::Base
   has_and_belongs_to_many :schedules
+  belongs_to :book_category
 
-  enum book_type: [:new_testament, :old_testament, :others]
-
-  validates :book_type, :name, :parts_number, presence: true
+  validates :book_category, :name, :parts_number, presence: true
 end

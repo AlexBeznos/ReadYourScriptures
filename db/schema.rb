@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150430104738) do
+ActiveRecord::Schema.define(version: 20150512191438) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,12 +27,18 @@ ActiveRecord::Schema.define(version: 20150430104738) do
 
   add_index "assignments", ["schedule_id"], name: "index_assignments_on_schedule_id", using: :btree
 
+  create_table "book_categories", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "books", force: :cascade do |t|
-    t.integer  "book_type"
+    t.integer  "book_category_id"
     t.string   "name"
     t.integer  "parts_number"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
   end
 
   create_table "books_schedules", force: :cascade do |t|

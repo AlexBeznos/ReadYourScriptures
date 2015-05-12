@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     end
 
     resources :books, except: [:show]
+    resources :book_categories, except: [:show]
   end
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

@@ -1,0 +1,17 @@
+= content_for :title, "Edit Book Category"
+%section.content-header
+  %h1= yield(:title)
+
+  - navigation_add 'Books', admin_books_path
+  - navigation_add "Book #{@book_category.id}", admin_book_category_path(@book_category)
+  - navigation_add 'Edit', edit_admin_book_category_path(@book_category)
+  = render_navigation
+
+%section.content
+  .row
+    .col-md-6
+      .box.box-solid
+        .box-header.with-border
+          Name:
+          = @book_category.name
+        .box-body= render 'form'
