@@ -4,6 +4,8 @@ class CreateUsers < ActiveRecord::Migration
       t.timestamps
       t.string :email, :null => false
       t.string :phone
+      t.boolean :activated, :default => false
+      t.string :activation_code
       t.string :crypted_password, :null => false
       t.string :password_salt, :null => false
       t.string :persistence_token, :null => false

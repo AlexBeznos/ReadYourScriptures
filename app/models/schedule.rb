@@ -15,8 +15,21 @@ class Schedule < ActiveRecord::Base
   validates :start_date, :name, :duration, presence: true, unless: 'step == 1'
   validates :user_id, presence: true, if: 'step == 3'
 
+  before_update :check_user_activation
+
   def gen_name
     self.name = "#{self.gen_name_book_part} in #{distance_of_time_in_words(Time.now, self.duration.days.from_now)}"
+  end
+
+  def check_user_activation
+    user = self.user
+    
+    if user
+      if user.activated == false
+        self.active = false
+        self.user = user
+      end
+    end
   end
 
   def gen_assignments

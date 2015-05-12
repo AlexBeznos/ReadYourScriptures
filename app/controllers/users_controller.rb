@@ -13,7 +13,7 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
-      redirect_to account_path, :notice => 'User successfuly created'
+      redirect_to account_path, :notice => 'Account successfuly created, but not activated. For activation, please, check your email.'
     else
       render :action => :new
     end
@@ -21,6 +21,6 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:email, :password, :phone, :notification_type)
+      params.require(:user).permit(:email, :password, :phone)
     end
 end

@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-
+  default_url_options :host => "readyourscriptures.com"
   resources :user_sessions, only: [:create, :destroy]
   get 'login' => 'user_sessions#new'
 
@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   get 'reading_plans/choose_dates' => 'schedules#step_2', as: :choose_dates
   get 'reading_plans/:id/toggle' => 'schedules#toggle', as: :toggle_schedule
   resources :reading_plans, :controller => 'schedules', as: :schedules, except: :edit
+
+  get 'activate/:id' => 'user_activations#create', as: :activation
 
   namespace :admin do
     get '/' => 'users#index'

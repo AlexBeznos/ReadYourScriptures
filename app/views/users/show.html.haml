@@ -2,10 +2,11 @@
 
 = render 'shared/application/blue_box'
 
-
 .container.mb.min_height
   .row
     .col-md-12
+      = render 'shared/flash'
+
       - if current_user.schedules.any?
         %table.table.table-striped
           %thead

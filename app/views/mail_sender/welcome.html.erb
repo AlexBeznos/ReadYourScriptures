@@ -175,7 +175,8 @@ background: #2C94E0;
                             <div class='contentEditableContainer contentTextEditable'>
                              <div class='contentEditable'>
                               <p>Thanks for creating an account on ReadYourScriptures.</p>
-                              <p>Now you can create reading plans and enjoy<br>all benefits of our app.</p>
+                              <p>After activation you will be able to create reading plans and enjoy<br>all benefits of our app.</p>
+                              <p><%= link_to 'Activate', activation_url(@user.activation_code) %></p>
                             </div>
                           </div>
                         </td>

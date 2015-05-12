@@ -5,25 +5,21 @@ class User < ActiveRecord::Base
     c.require_password_confirmation = false
   end
 
-  enum notification_type: [:email, :sms, :email_and_sms]
+  validates :email, presence: true
+  validates :password, presence: true, on: :create
+  validates :phone, :numericality => true,
+                    :length => { :minimum => 10, :maximum => 15 }
 
-  validates :email, :password, :notification_type, presence: true
-  validates :phone, :presence => true,
-                    :numericality => true,
-                    :length => { :minimum => 10, :maximum => 15 },
-                    :if => :sms_included?
-
-  before_create :set_phone, :if => :sms_included?
+  before_create :set_activation_code
   after_create :send_welcome_email
 
-  def sms_included?
-    [:sms, :email_and_sms].include?(self.notification_type.to_sym)
-  end
+  def set_activation_code
+    self.activation_code = SecureRandom.hex(12)
 
-  def set_phone
-    self.phone = nil
+    if User.where(activation_code: self.activation_code).any?
+      self.set_activation_code
+    end
   end
-
   def send_welcome_email
     MailSender.welcome(self).deliver
   end
