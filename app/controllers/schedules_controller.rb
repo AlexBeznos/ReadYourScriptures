@@ -4,6 +4,10 @@ class SchedulesController < ApplicationController
   before_action :validate_association, only: :create
 
   def show
+    respond_to do |ext|
+      ext.html {  }
+      ext.ics { }
+    end
   end
 
   def new

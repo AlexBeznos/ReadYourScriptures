@@ -43,8 +43,8 @@ gem 'yaml_db'
 # rufus-scheduler
 gem 'rufus-scheduler'
 
-# sms api
-gem 'twilio-ruby', '~> 4.0.0'
+# icalendar
+gem 'icalendar'
 
 # bootstrap
 gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS

@@ -1,3 +1,4 @@
+require 'icalendar'
 include ActionView::Helpers::DateHelper
 
 class Schedule < ActiveRecord::Base
@@ -84,5 +85,19 @@ class Schedule < ActiveRecord::Base
             else
               many
             end
+  end
+
+  def to_ical
+    cal = Icalendar::Calendar.new
+
+    assignments.each do |assignment|
+      event = Icalendar::Event.new
+      event.dtstart = assignment.sending_date.to_date
+      event.summary = assignment.name
+      event.url = Rails.application.routes.url_helpers.schedule_url(self)
+      cal.add_event(event)
+    end
+
+    cal.to_ical
   end
 end

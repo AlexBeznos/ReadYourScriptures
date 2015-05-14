@@ -5,6 +5,7 @@
 .container.mb.min_height
   .row
     .col-md-12
+      = link_to 'download iCal', schedule_path(@schedule, format: "ics"), class: 'btn btn-default btn-xs'
       = link_to @schedule.active ? 'Stop sending' : 'Start sending', toggle_schedule_path(@schedule), class: "btn pull-right btn-xs btn-#{@schedule.active ? 'warning' : 'success'}"
 
       %table.table.table-striped
