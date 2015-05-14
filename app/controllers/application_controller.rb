@@ -11,10 +11,12 @@ class ApplicationController < ActionController::Base
   def prepare_schedule
     if session[:schedule_id] && current_user
       schedule = Schedule.includes(:books).find(session[:schedule_id])
-      session[:schedule_id] = nil
+      unless schedule.duration == nil
+        session[:schedule_id] = nil
 
-      current_user.schedules << schedule
-      schedule.gen_assignments
+        current_user.schedules << schedule
+        schedule.gen_assignments
+      end
     end
   end
 
