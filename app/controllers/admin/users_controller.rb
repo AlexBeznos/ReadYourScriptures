@@ -11,5 +11,6 @@ class Admin::UsersController < AdminController
   private
     def find_user
       @user = User.includes(:schedules).find(params[:id])
+      @schedule = @user.schedules.where(ready: true)
     end
 end
