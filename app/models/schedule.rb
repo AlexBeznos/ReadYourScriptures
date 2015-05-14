@@ -72,7 +72,6 @@ class Schedule < ActiveRecord::Base
 
   def gen_name_book_part
     books = self.books
-    many = "#{books.first.name}, #{books.second.name} and others"
 
     return  case books.count
             when 1
@@ -85,18 +84,18 @@ class Schedule < ActiveRecord::Base
               if books.where(book_category_id: 1).count == 27
                 'New testament'
               else
-                many
+                "#{books.first.name}, #{books.second.name} and others"
               end
             when 39
               if books.where(book_category_id: 2).count == 39
                 'Old testament'
               else
-                many
+                "#{books.first.name}, #{books.second.name} and others"
               end
             when 66
               'The Bible'
             else
-              many
+              "#{books.first.name}, #{books.second.name} and others"
             end
   end
 
