@@ -10,7 +10,7 @@ module AssignmentCreationHelper
       end
     end
 
-    self.update(active: true)
+    self.toggle_active_partly
   end
 
   def create_regular_assignments(sum)
@@ -56,7 +56,7 @@ module AssignmentCreationHelper
     end
 
     self.create_assignments_from_array(arr)
-    self.update(active: true)
+    self.toggle_active_partly
   end
 
 
@@ -66,6 +66,10 @@ module AssignmentCreationHelper
                         sending_date: self.start_date + index,
                         schedule_id: self.id)
     end
+  end
+
+  def toggle_active_partly
+    self.update(active: user.activated, ready: true)
   end
 
   private
@@ -79,10 +83,9 @@ module AssignmentCreationHelper
 
         return "#{name} #{parts}"
       else
-        puts time
-        puts time.class
         parts = from == to ? from : "#{from.to_s} - #{to.to_s}"
         return "#{name} #{parts}"
       end
     end
+
 end

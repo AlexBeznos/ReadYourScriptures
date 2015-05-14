@@ -18,7 +18,6 @@ class Schedule < ActiveRecord::Base
 
   before_update :check_user_activation
   after_update :send_first_assignment, if: 'active == true'
-  after_update :set_ready_state, if: 'user_id != nil'
 
   def gen_name
     self.name = "#{self.gen_name_book_part} in #{distance_of_time_in_words(Time.now, self.duration.days.from_now)}"
@@ -46,9 +45,6 @@ class Schedule < ActiveRecord::Base
     end
   end
 
-  def set_ready_state
-    self.update(ready: true)
-  end
 
   def gen_assignments
     sum = self.books.sum(:parts_number)
