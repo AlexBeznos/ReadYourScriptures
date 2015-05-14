@@ -12,10 +12,8 @@
         %thead
           %tr
             %th email
-            %th phone
         %tbody
         - @users.each do |user|
           %tr
             %th= link_to user.email, admin_user_path(user)
-            %th= user.phone
   = paginate @users

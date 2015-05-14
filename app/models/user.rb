@@ -7,8 +7,6 @@ class User < ActiveRecord::Base
 
   validates :email, presence: true
   validates :password, presence: true, on: :create
-  validates :phone, :numericality => true,
-                    :length => { :minimum => 10, :maximum => 15 }
 
   before_create :set_activation_code
   after_create :send_welcome_email
