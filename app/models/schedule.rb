@@ -4,7 +4,7 @@ include ActionView::Helpers::DateHelper
 class Schedule < ActiveRecord::Base
   include AssignmentCreationHelper
 
-  default_scope -> { where(active: true).order(:created_at => :desc) }
+  default_scope -> { order(:created_at => :desc) }
 
   has_and_belongs_to_many :books
   has_many :assignments, :dependent => :destroy
@@ -17,6 +17,7 @@ class Schedule < ActiveRecord::Base
   validates :user_id, presence: true, if: 'step == 3'
 
   before_update :check_user_activation
+  after_update :send_first_assignment, if: 'active == true'
 
   def gen_name
     self.name = "#{self.gen_name_book_part} in #{distance_of_time_in_words(Time.now, self.duration.days.from_now)}"
@@ -30,6 +31,17 @@ class Schedule < ActiveRecord::Base
         self.active = false
         self.user = user
       end
+    end
+  end
+
+  def send_first_assignment
+    assignment = self.assignments[0]
+    now = Time.now
+    today = Date.today
+
+    if assignment.sending_date == today && now.hour > 9
+      MailSender.assignment_notification(assignment).deliver
+      assignment.update(sended: true)
     end
   end
 

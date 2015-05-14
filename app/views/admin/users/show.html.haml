@@ -32,7 +32,7 @@
             %th start date
             %th
         %tbody
-        - @user.schedules.each do |schedule|
+        - @schedules.each do |schedule|
           %tr
             %th= link_to schedule.name, admin_user_schedule_path(@user, schedule)
             %td= schedule.duration
