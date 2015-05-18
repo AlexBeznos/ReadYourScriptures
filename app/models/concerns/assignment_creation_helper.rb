@@ -15,50 +15,67 @@ module AssignmentCreationHelper
 
   def create_regular_assignments(sum)
     div = sum / self.duration
-    current_div = 0
-    rest_books = []
+    days_with_plus = sum % self.duration
+    book_index = 0
+    book_chapter = 0
     arr = []
-    mod = 0
+    rest_arr = []
 
-    self.books.each_with_index do |book, index|
-      if mod == 0
-        number_of_times = book.parts_number / div
-
-        number_of_times.times do |time|
-          arr.push(gen_assignment_name(book.name, time, div, ((time * div) + 1), ((time * div) + div)))
-        end
-
-        mod = book.parts_number % div
+    self.duration.times do |time|
+      if time + 1 <= days_with_plus
+        current_div = div + 1
       else
-        if rest_books.empty?
-          current_div = 0
-          b = self.books[index - 1]
-          rest_books.push(gen_assignment_name(b.name, 1, 1, (b.parts_number - mod + 1), b.parts_number))
-        end
-
-        current_div == 0 ? current_div = div - mod : current_div = mod
-
-        if book.parts_number < current_div
-          rest_books.push(gen_assignment_name(book.name, 0, book.parts_number))
-          mod = current_div - book.parts_number
-        else
-          rest_books.push(gen_assignment_name(book.name, 0, current_div))
-          arr.push(rest_books.join(', '))
-          rest_books = []
-
-          ((book.parts_number - current_div) / div).times do |time|
-            arr.push(gen_assignment_name(book.name, time, (current_div + 1), ((time * div) + 1 + mod), ((time * div) + div + mod), (div + current_div), true))
-          end
-
-          mod = (book.parts_number - current_div) % div
-        end
+        current_div = div
       end
+
+      hash = self.get_assignment_name(book_index, book_chapter, current_div)
+      book_index = hash[:book_index]
+      book_chapter = hash[:book_chapter]
+      arr.push(hash[:name])
     end
+
 
     self.create_assignments_from_array(arr)
     self.toggle_active_partly
   end
 
+  def get_assignment_name(current_book, current_chapter, div)
+    book = self.books[current_book]
+
+    if book.parts_number - current_chapter < div
+      rest_arr = []
+      first = true
+
+      until div <= 0 do
+        book = self.books[current_book]
+
+        if first
+          till = book.parts_number
+          div = div - (book.parts_number - current_chapter)
+          current_book += 1
+          first = false
+        else
+          if (book.parts_number - current_chapter) < div
+            till = book.parts_number
+            div = div - (book.parts_number - current_chapter)
+            current_book += 1
+          else
+            till = current_chapter + div
+            cc = current_chapter + div
+            div = 0
+          end
+        end
+
+        str = "#{book.name} #{current_chapter == 0 ? '1' : current_chapter + 1} - #{till}"
+        rest_arr.push(str)
+        current_chapter = cc ? cc : 0
+      end
+
+      return {:book_index => current_book, :book_chapter => current_chapter, :name => rest_arr.join(', ')}
+    else
+      return {:book_index => current_book, :book_chapter => current_chapter + div, :name => "#{book.name} #{current_chapter == 0 ? '1' : current_chapter + 1 } - #{current_chapter + div}"}
+    end
+  end
 
   def create_assignments_from_array(arr)
     arr.each_with_index do |name, index|
@@ -68,24 +85,9 @@ module AssignmentCreationHelper
     end
   end
 
+
   def toggle_active_partly
     self.update(active: user.activated, ready: true)
   end
-
-  private
-    def gen_assignment_name(name, time, first, from = false, to = false, first_second = false, cust = false)
-      if time == 0
-        if cust
-          parts = first == first_second ? first.to_s : "#{first} - #{first_second}"
-        else
-          parts = first == 1 ? '1' : "1 - #{first.to_s}"
-        end
-
-        return "#{name} #{parts}"
-      else
-        parts = from == to ? from : "#{from.to_s} - #{to.to_s}"
-        return "#{name} #{parts}"
-      end
-    end
 
 end
