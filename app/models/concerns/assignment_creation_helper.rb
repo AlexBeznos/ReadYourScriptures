@@ -66,14 +66,14 @@ module AssignmentCreationHelper
           end
         end
 
-        str = "#{book.name} #{current_chapter == 0 ? '1' : current_chapter + 1} - #{till}"
+        str = gen_assignment_name(book.name, current_chapter + 1, till)
         rest_arr.push(str)
         current_chapter = cc ? cc : 0
       end
 
       return {:book_index => current_book, :book_chapter => current_chapter, :name => rest_arr.join(', ')}
     else
-      return {:book_index => current_book, :book_chapter => current_chapter + div, :name => "#{book.name} #{current_chapter == 0 ? '1' : current_chapter + 1 } - #{current_chapter + div}"}
+      return {:book_index => current_book, :book_chapter => current_chapter + div, :name => gen_assignment_name(book.name, current_chapter + 1, current_chapter + div)}
     end
   end
 
@@ -86,8 +86,18 @@ module AssignmentCreationHelper
   end
 
 
+
   def toggle_active_partly
     self.update(active: user.activated, ready: true)
   end
+
+  private
+    def gen_assignment_name(book_name, from, till)
+      if from == till
+        "#{book_name} #{from}"
+      else
+        "#{book_name} #{from} - #{till}"
+      end
+    end
 
 end
